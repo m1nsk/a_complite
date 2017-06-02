@@ -9,3 +9,11 @@ axios.defaults.baseURL = baseURL
 export function getAutoCopleteListQuery (query) {
   return axios.get('/complete/' + query)
 }
+
+export function getBookByAuthor (query) {
+  return axios.get('/complete/author/' + query)
+}
+
+export function getBookByPublisher (query) {
+  return axios.get('/complete/publisher/' + query)
+}

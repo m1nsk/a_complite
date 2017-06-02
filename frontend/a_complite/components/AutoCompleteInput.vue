@@ -1,6 +1,7 @@
 <template>
   <div class="autocomplete-input">
-    <input class="input is-large" placeholder="Search..." list="itemList" @input="updateData()" ref="aComplete">
+    <h1>{{title}}</h1>
+    <input class="input is-large" placeholder="Search..." @input="updateData()" ref="aComplete">
     <ul class="options-list">
       <li v-for="item in value.items" @click="optionClicked(item)">{{item.name}}</li>
     </ul>
@@ -9,7 +10,7 @@
 
 <script>
   export default {
-    props: ['value', 'callback'],
+    props: ['value', 'callback', 'title'],
     methods: {
       updateData () {
         this.callback(this.$refs.aComplete.value)
@@ -44,6 +45,7 @@
     position: relative;
     height: 300px;
     width: 300px;
+    display: inline-block;
   }
 
   ul.options-list {
