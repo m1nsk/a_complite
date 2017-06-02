@@ -2,7 +2,7 @@
   <div class="autocomplete-input">
     <input class="input is-large" placeholder="Search..." list="itemList" @input="updateData()" ref="aComplete">
     <ul class="options-list">
-      <li v-for="item in value.items" @click="optionClicked">{{item.name}}</li>
+      <li v-for="item in value.items" @click="optionClicked(item)">{{item.name}}</li>
     </ul>
   </div>
 </template>
@@ -18,8 +18,8 @@
           items: this.value.items
         })
       },
-      optionClicked () {
-        console.log('clicked')
+      optionClicked (item) {
+        this.$emit('option', item)
       }
     }
   }

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <auto-complete-input v-model="model" :callback="getQuery"></auto-complete-input>
+    <auto-complete-input v-model="model" :callback="getQuery" @option="onOptionClicked"></auto-complete-input>
   </div>
 </template>
 
@@ -32,6 +32,9 @@
         }).catch(
           this.model.items = []
         )
+      },
+      onOptionClicked (item) {
+        console.log(item.name)
       }
     }
   }
