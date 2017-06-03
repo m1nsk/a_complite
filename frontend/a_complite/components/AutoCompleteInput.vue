@@ -3,12 +3,13 @@
     <h1>{{title}}</h1>
     <input class="input is-large" placeholder="Search..." @input="updateData()" ref="aComplete">
     <ul class="options-list">
-      <li v-for="item in value.items" @click="optionClicked(item)">{{item.name}}</li>
+      <li is="book-view" v-for="item in value.items" @click="optionClicked(item)" :book="item"></li>
     </ul>
   </div>
 </template>
 
 <script>
+  import BookView from '~components/BookView.vue'
   export default {
     props: ['value', 'callback', 'title'],
     methods: {
@@ -22,6 +23,18 @@
       optionClicked (item) {
         this.$emit('option', item)
       }
+    },
+    computed: {
+      options () {
+        var options = []
+        for (var index in this.value.items) {
+          options.push(this.value.items[index].name.replace(this.$refs.aComplete.value, '<b>' + this.$refs.aComplete.value + '</b>'))
+        }
+        return options
+      }
+    },
+    components: {
+      BookView
     }
   }
 </script>

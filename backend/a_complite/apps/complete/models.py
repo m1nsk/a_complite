@@ -6,6 +6,11 @@ from django.db import models
 # Create your models here.
 
 
+class BookManager(models.Manager):
+    def get_by_natural_key(self, name, author, publisher):
+        return self.get(anme=name, author=author, publisher=publisher)
+
+
 class Publisher(models.Model):
     name = models.CharField(max_length=30)
 
@@ -21,6 +26,7 @@ class Author(models.Model):
 
 
 class Book(models.Model):
+    objects = BookManager()
     name = models.CharField(max_length=30)
     author = models.ForeignKey('Author')
     publisher = models.ForeignKey('Publisher')

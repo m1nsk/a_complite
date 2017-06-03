@@ -35,6 +35,7 @@
         promise.then((response) => {
           this.author.items = []
           for (var item in response.data) {
+            console.log(response.data)
             this.author.items.push(response.data[item].fields)
           }
         }).catch(
@@ -54,13 +55,8 @@
       },
       getBookByResult (input) {
         var result = this.author.items.concat(this.publisher.items)
-        result = result.filter((item) => {
-          var pattern = new RegExp('(.)*' + input + '(.)*')
-          console.log(item)
-          console.log(pattern)
-          console.log(pattern.test(item))
-          return pattern.test(item)
-        })
+        var pattern = new RegExp('(.)*' + input + '(.)*')
+        result = result.filter((item) => { return pattern.test(item.name) })
         this.book.items = result
       },
       onOptionClicked (item) {
