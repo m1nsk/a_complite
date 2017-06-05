@@ -1,5 +1,6 @@
 <template>
   <div>
+    <p>{{author.items}}</p>
     <auto-complete-input v-model="author" :callback="getByAuthor" @option="onOptionClicked" title="Author"></auto-complete-input>
     <auto-complete-input v-model="publisher" :callback="getByPublisher" @option="onOptionClicked" title="Publisher"></auto-complete-input>
     <auto-complete-input v-model="book" :callback="getBookByResult" @option="onOptionClicked" title="Book"></auto-complete-input>
@@ -7,7 +8,7 @@
 </template>
 
 <script>
-  import { getBookByAuthor, getBookByPublisher } from '../api/index.js'
+  import { getBookByAuthor, getBookByPublisher, baseHost } from '../api/index.js'
   import AutoCompleteInput from '~components/AutoCompleteInput.vue'
   export default {
     data () {
@@ -39,7 +40,9 @@
           console.log(response.data)
           this.author.items = []
           for (var item in response.data) {
-            console.log(response.data)
+            console.log(response.data[item]['image'])
+            console.log(baseHost)
+            response.data[item]['image'] = baseHost + response.data[item]['image']
             this.author.items.push(response.data[item])
           }
         }).catch(
