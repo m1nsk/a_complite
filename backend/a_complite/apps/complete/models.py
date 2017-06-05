@@ -6,28 +6,23 @@ from django.db import models
 # Create your models here.
 
 
-class BookManager(models.Manager):
-    def get_by_natural_key(self, name, author, publisher):
-        return self.get(anme=name, author=author, publisher=publisher)
-
-
 class Publisher(models.Model):
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=120, unique=True)
 
     def __str__(self):
         return self.name
 
 
 class Author(models.Model):
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=120, unique=True)
 
     def __str__(self):
         return self.name
 
 
 class Book(models.Model):
-    objects = BookManager()
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=120, unique=True)
+    image = models.ImageField(default='/no-img.jpg', null=True, blank=True)
     author = models.ForeignKey('Author')
     publisher = models.ForeignKey('Publisher')
 

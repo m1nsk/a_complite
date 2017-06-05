@@ -1,18 +1,14 @@
 from django.conf.urls import url
-from .views import author_list, publisher_list, UserViewSet, GroupViewSet
+from .views import BookByAuthorListView, BookByPublisherListView
 from django.conf.urls import url, include
-from rest_framework import routers
+from django.conf import settings
+from django.conf.urls.static import static
 
-router = routers.DefaultRouter()
-router.register(r'users', UserViewSet)
-router.register(r'groups', GroupViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 
 urlpatterns = [
-    url(r'author/(?P<complete_author>(.)+)/$', author_list),
-    url(r'publisher/(?P<complete_publisher>(.)+)/$', publisher_list),
-    url(r'^', include(router.urls)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
-]
+    url(r'author/(?P<complete_author>(.)+)/$', BookByAuthorListView.as_view()),
+    url(r'publisher/(?P<complete_publisher>(.)+)/$', BookByPublisherListView.as_view()),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
