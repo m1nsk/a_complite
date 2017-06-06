@@ -17,3 +17,10 @@ export function getBookByAuthor (query) {
 export function getBookByPublisher (query) {
   return axios.get('/complete/publisher/' + query)
 }
+
+export function addBookFromForm (formData) {
+  const config = {
+    headers: { 'content-type': 'multipart/form-data' }
+  }
+  return axios.post('/book/add/', formData, config)
+}

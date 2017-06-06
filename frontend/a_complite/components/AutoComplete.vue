@@ -37,7 +37,6 @@
       getByAuthor (input) {
         var promise = getBookByAuthor(input)
         promise.then((response) => {
-          console.log(response.data)
           this.author.items = []
           for (var item in response.data) {
             console.log(response.data[item]['image'])
