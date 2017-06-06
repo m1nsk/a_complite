@@ -6,10 +6,6 @@ export const baseURL = baseHost + '/api/'
 
 axios.defaults.baseURL = baseURL
 
-export function getAutoCopleteListQuery (query) {
-  return axios.get('/complete/' + query)
-}
-
 export function getBookByAuthor (query) {
   return axios.get('/complete/author/' + query)
 }
@@ -20,7 +16,10 @@ export function getBookByPublisher (query) {
 
 export function addBookFromForm (formData) {
   const config = {
-    headers: { 'content-type': 'multipart/form-data' }
+    headers: {
+      'content-type': 'multipart/form-data',
+      'Content-Type': 'application/json'
+    }
   }
   return axios.post('/book/add/', formData, config)
 }

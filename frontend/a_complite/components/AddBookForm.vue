@@ -1,7 +1,7 @@
 <template>
   <div>
     <form ref="myform" @submit.prevent="addBook" method="POST" action="http://127.0.0.1:8000/api/book/add" id="mainForm" enctype="multipart/form-data">
-      <p><input type="text" placeholder="Enter book title..." name="book" ref="book" v-model="bookFormData.book"></p>
+      <p><input type="text" placeholder="Enter book title..." name="book" ref="book" v-model="bookFormData.name"></p>
       <p><input type="text" placeholder="Enter author name..." name="author" ref="author" v-model="bookFormData.author"></p>
       <p><input type="text" placeholder="Enter publisher..." name="publisher" ref="publisher" v-model="bookFormData.publisher"></p>
       <p><input type="file" placeholder="load book image" name="image" accept="image/*" ref="image" v-on:change="fileChanged"></p>
@@ -16,7 +16,7 @@
     data () {
       return {
         bookFormData: {
-          book: '',
+          name: '',
           author: '',
           publisher: '',
           image: ''
@@ -28,6 +28,10 @@
         if (this.validateForm()) {
           let data = new FormData()
           for (var key in this.bookFormData) {
+            console.log(key, this.bookFormData[key])
+            if (key === 'image' & !this.bookFormData[key]) {
+              continue
+            }
             data.append(key, this.bookFormData[key])
           }
           var promise = addBookFromForm(data)
@@ -51,7 +55,7 @@
         return this.validateBook() & this.validateAuthor() & this.validatePublisher()
       },
       validateBook () {
-        if (this.bookFormData.book) {
+        if (this.bookFormData.name) {
           return true
         }
         return false
