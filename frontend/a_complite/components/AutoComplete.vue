@@ -37,9 +37,13 @@
       getByAuthor (input) {
         var promise = getBookByAuthor(input)
         promise.then((response) => {
+          console.log(response.data)
           this.author.items = []
           for (var item in response.data) {
             response.data[item]['image'] = baseHost + response.data[item]['image']
+            response.data[item]['author'] = response.data[item]['author']['name']
+            response.data[item]['publisher'] = response.data[item]['publisher']['name']
+
             this.author.items.push(response.data[item])
           }
         }).catch(
@@ -52,6 +56,8 @@
           this.publisher.items = []
           for (var item in response.data) {
             response.data[item]['image'] = baseHost + response.data[item]['image']
+            response.data[item]['author'] = response.data[item]['author']['name']
+            response.data[item]['publisher'] = response.data[item]['publisher']['name']
             this.publisher.items.push(response.data[item])
           }
         }).catch(

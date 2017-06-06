@@ -28,10 +28,10 @@
         if (this.validateForm()) {
           let data = new FormData()
           for (var key in this.bookFormData) {
-            console.log(key, this.bookFormData[key])
             if (key === 'image' & !this.bookFormData[key]) {
               continue
             }
+            console.log(key, this.bookFormData[key])
             data.append(key, this.bookFormData[key])
           }
           var promise = addBookFromForm(data)
