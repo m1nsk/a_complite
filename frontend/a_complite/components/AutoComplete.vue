@@ -1,14 +1,18 @@
 <template>
   <div>
     <p><nuxt-link to="/addbookform">Add new book</nuxt-link></p>
-    <auto-complete-input v-model="author" :callback="getByAuthor" @option="onOptionClicked" title="Author"></auto-complete-input>
-    <auto-complete-input v-model="publisher" :callback="getByPublisher" @option="onOptionClicked" title="Publisher"></auto-complete-input>
-    <auto-complete-input v-model="book" :callback="getBookByResult" @option="onOptionClicked" title="Book"></auto-complete-input>
+    <auto-complete-input v-model="author" :callback="getByAuthor" @option="onAuthorClicked" title="Author"></auto-complete-input>
+    <auto-complete-input v-model="publisher" :callback="getByPublisher" @option="onPublisherClicked" title="Publisher"></auto-complete-input>
+    <form ref="myform" @submit.prevent="submitBook" method="POST" id="mainForm" enctype="multipart/form-data">
+      <p><input type="text" placeholder="Enter book title..." name="book" ref="book" v-model="formModel.name"></p>
+      <p><input type="file" placeholder="load book image" name="image" accept="image/*" ref="image" v-on:change="fileChanged"></p>
+      <input type="submit" name="btnSubmit" >
+    </form>
   </div>
 </template>
 
 <script>
-  import { getBookByAuthor, getBookByPublisher, baseHost } from '../api/index.js'
+  import { getBookByField, addBookFrom, baseHost } from '../api/index.js'
   import AutoCompleteInput from '~components/AutoCompleteInput.vue'
   export default {
     data () {
@@ -27,6 +31,12 @@
           query: '3',
           items: [],
           highlighted: 'name'
+        },
+        formModel: {
+          author: '',
+          publisher: '',
+          name: '',
+          image: ''
         }
       }
     },
@@ -35,56 +45,81 @@
     },
     methods: {
       getByAuthor (input) {
-        var promise = getBookByAuthor(input)
-        promise.then((response) => {
-          console.log(response.data)
-          this.author.items = []
-          for (var item in response.data) {
-            response.data[item]['image'] = baseHost + response.data[item]['image']
-            response.data[item]['author'] = response.data[item]['author']['name']
-            response.data[item]['publisher'] = response.data[item]['publisher']['name']
-
-            this.author.items.push(response.data[item])
-          }
-        }).catch(
-          this.author.items = []
-        )
+        this.getByField(input, 'author')
       },
       getByPublisher (input) {
-        var promise = getBookByPublisher(input)
+        this.getByField(input, 'publisher')
+      },
+      getByField (input, field) {
+        var data = {
+          input: input,
+          field: field
+        }
+        var promise = getBookByField(data)
         promise.then((response) => {
-          this.publisher.items = []
+          this[field].items = []
           for (var item in response.data) {
             response.data[item]['image'] = baseHost + response.data[item]['image']
             response.data[item]['author'] = response.data[item]['author']['name']
             response.data[item]['publisher'] = response.data[item]['publisher']['name']
-            this.publisher.items.push(response.data[item])
+            this[field].items.push(response.data[item])
           }
         }).catch(
-          this.publisher.items = []
+          this[field].items = []
         )
       },
-      getBookByResult (input) {
-        var result = this.author.items.concat(this.publisher.items)
-        var pattern = new RegExp('(.)*' + input + '(.)*')
-        result = arrayUnique(result, 'name')
-        result = result.filter((item) => { return pattern.test(item.name) })
-        this.book.items = result
-
-        function arrayUnique (array, key) {
-          var arrDict = {}
-          var result = []
-          for (var index in array) {
-            if (!(array[index][key] in arrDict)) {
-              arrDict[array[index][key]] = true
-              result.push(array[index])
-            }
+      onClicked () {
+        console.log('clicked')
+      },
+      onAuthorClicked (item) {
+        this.formModel.author = item
+      },
+      onPublisherClicked (item) {
+        this.formModel.publisher = item
+      },
+      submitBook () {
+        if (this.validateForm()) {
+          let data = new FormData()
+          for (var key in this.formModel) {
+            data.append(key, this.formModel[key])
           }
-          return result
+          var promise = addBookFrom(data)
+          promise.then((response) => {
+            console.log(response.data)
+            this.clearForm()
+          }).catch(
+            console.log('shit happens')
+          )
         }
       },
-      onOptionClicked (item) {
-        console.log(item.name)
+      clearForm () {
+        for (var key in this.formModel) {
+          this.formModel[key] = ''
+        }
+      },
+      fileChanged (e) {
+        this.formModel.image = e.target.files[0]
+      },
+      validateForm () {
+        return this.validateBook() & this.validateAuthor() & this.validatePublisher()
+      },
+      validateBook () {
+        if (this.formModel.name) {
+          return true
+        }
+        return false
+      },
+      validateAuthor () {
+        if (this.formModel.author.author) {
+          return true
+        }
+        return false
+      },
+      validatePublisher () {
+        if (this.formModel.publisher.publisher) {
+          return true
+        }
+        return false
       }
     }
   }

@@ -6,20 +6,43 @@ export const baseURL = baseHost + '/api/'
 
 axios.defaults.baseURL = baseURL
 
-export function getBookByAuthor (query) {
-  return axios.get('/complete/author/' + query)
+export function getBookByField (data) {
+  console.log(data)
+  return axios.get('/complete/', {
+    params: data
+  })
 }
 
 export function getBookByPublisher (query) {
   return axios.get('/complete/publisher/' + query)
 }
 
-export function addBookFromForm (formData) {
+export function addBookFrom (formData) {
   const config = {
     headers: {
       'content-type': 'multipart/form-data',
       'Content-Type': 'application/json'
     }
   }
-  return axios.post('/book/add/', formData, config)
+  return axios.post('/book/', formData, config)
+}
+
+export function addAuthorFrom (formData) {
+  const config = {
+    headers: {
+      'content-type': 'multipart/form-data',
+      'Content-Type': 'application/json'
+    }
+  }
+  return axios.post('/author/', formData, config)
+}
+
+export function addPublisherFrom (formData) {
+  const config = {
+    headers: {
+      'content-type': 'multipart/form-data',
+      'Content-Type': 'application/json'
+    }
+  }
+  return axios.post('/publisher/', formData, config)
 }

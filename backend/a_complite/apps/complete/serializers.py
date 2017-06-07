@@ -3,24 +3,32 @@ from .models import Book, Author, Publisher
 import os
 
 
-class AuthorSerializer(serializers.Serializer):
-    name = serializers.CharField()
+class AuthorSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Author
+        fields = ('name',)
 
 
-class PublisherSerializer(serializers.Serializer):
-    name = serializers.CharField()
+class PublisherSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Publisher
+        fields = ('name',)
 
 
-class BookSerializer(serializers.Serializer):
-    name = serializers.CharField()
-    image = serializers.ImageField(required=False)
-    author = AuthorSerializer(many=True)
-    publisher = PublisherSerializer(many=True)
+class BookSerializer(serializers.ModelSerializer):
+    author = AuthorSerializer()
+    publisher = PublisherSerializer()
+
+    class Meta:
+        model = Book
+        fields = ('name', 'image', 'author', 'publisher')
 
     def create(self, validated_data):
         print(validated_data, 'v_data')
-        author_data = validated_data.pop('author')
-        publisher_data = validated_data.pop('publisher')
+        author_data = validated_data['author']
+        publisher_data = validated_data['publisher']
         author = Author.objects.filter(name=author_data).first()
         if author == None:
             author = Author.objects.create(name=author_data)

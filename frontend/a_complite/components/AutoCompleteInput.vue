@@ -1,9 +1,9 @@
 <template>
   <div class="autocomplete-input">
     <h1>{{title}}</h1>
-    <input class="input is-large" placeholder="Search..." @input="updateData()" ref="aComplete">
+    <input class="input is-large" placeholder="Search..." :value="value.query" @input="updateData()" ref="aComplete">
     <ul class="options-list">
-      <li :highlighted="value.highlighted" :input="value.query" is="book-view" v-for="item in value.items" @click="optionClicked(item)" :book="item"></li>
+      <li :highlighted="value.highlighted" :input="value.query" is="book-view" v-for="item in value.items" @click.native="optionClicked(item)" :book="item"></li>
     </ul>
   </div>
 </template>
@@ -23,6 +23,8 @@
       },
       optionClicked (item) {
         this.$emit('option', item)
+        this.value.query = item[this.value.highlighted]
+        this.value.items = [item]
       }
     },
     components: {

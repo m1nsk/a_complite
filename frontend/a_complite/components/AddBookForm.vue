@@ -1,6 +1,7 @@
 <template>
   <div>
-    <form ref="myform" @submit.prevent="addBook" method="POST" action="http://127.0.0.1:8000/api/book/add" id="mainForm" enctype="multipart/form-data">
+    <h1>Book</h1>
+    <form ref="myform" @submit.prevent="addBook" method="POST" id="mainForm" enctype="multipart/form-data">
       <p><input type="text" placeholder="Enter book title..." name="book" ref="book" v-model="bookFormData.name"></p>
       <p><input type="text" placeholder="Enter author name..." name="author" ref="author" v-model="bookFormData.author"></p>
       <p><input type="text" placeholder="Enter publisher..." name="publisher" ref="publisher" v-model="bookFormData.publisher"></p>
@@ -11,7 +12,7 @@
 </template>
 
 <script>
-  import { addBookFromForm } from '../api/index.js'
+  import { addBookFrom } from '../api/index.js'
   export default{
     data () {
       return {
@@ -24,7 +25,7 @@
       }
     },
     methods: {
-      addBook () {
+      submitBook () {
         if (this.validateForm()) {
           let data = new FormData()
           for (var key in this.bookFormData) {
@@ -34,13 +35,13 @@
             console.log(key, this.bookFormData[key])
             data.append(key, this.bookFormData[key])
           }
-          var promise = addBookFromForm(data)
+          var promise = addBookFrom(data)
           promise.then((response) => {
             console.log(response.data)
           }).catch(
             console.log('shit happens')
           )
-          this.clearForm()
+          // this.clearForm()
         }
       },
       clearForm () {
