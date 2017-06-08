@@ -37,11 +37,8 @@
           }
           var promise = addBookFrom(data)
           promise.then((response) => {
-            console.log(response.data)
-          }).catch(
-            console.log('shit happens')
-          )
-          // this.clearForm()
+            this.clearForm()
+          })
         }
       },
       clearForm () {

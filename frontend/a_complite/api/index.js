@@ -21,7 +21,7 @@ export function addBookFrom (formData) {
   const config = {
     headers: {
       'content-type': 'multipart/form-data',
-      'Content-Type': 'application/json'
+      'content-Type': 'application/json'
     }
   }
   return axios.post('/book/', formData, config)

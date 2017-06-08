@@ -7,44 +7,32 @@ class AuthorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Author
-        fields = ('name',)
+        fields = ('name', 'id')
 
 
 class PublisherSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Publisher
-        fields = ('name',)
+        fields = ('name', 'id')
 
 
 class BookSerializer(serializers.ModelSerializer):
-    author = AuthorSerializer()
-    publisher = PublisherSerializer()
 
     class Meta:
         model = Book
         fields = ('name', 'image', 'author', 'publisher')
 
-    def create(self, validated_data):
-        print(validated_data, 'v_data')
-        author_data = validated_data['author']
-        publisher_data = validated_data['publisher']
-        author = Author.objects.filter(name=author_data).first()
-        if author == None:
-            author = Author.objects.create(name=author_data)
 
-        publisher = Publisher.objects.filter(name=publisher_data).first()
-        if publisher == None:
-            publisher = Publisher.objects.create(name=publisher_data)
+class BookSerializerData(serializers.ModelSerializer):
+    author = AuthorSerializer()
+    publisher = PublisherSerializer()
+    author_id = serializers.PrimaryKeyRelatedField(read_only=True)
+    publisher_id = serializers.PrimaryKeyRelatedField(read_only=True)
 
-        name = validated_data['name']
-        image = ''
-        if image in validated_data:
-            image = validated_data['image']
-        return Book.objects.create(name=name, image=image, author=author, publisher=publisher)
-
-    def update(self, instance, validated_data):
-        print('update')
+    class Meta:
+        model = Book
+        fields = ('name', 'image', 'author', 'author_id', 'publisher', 'publisher_id')
 
 
 

@@ -19,10 +19,12 @@
       bookBold () {
         var bookBold = {}
         Object.keys(this.book).forEach((key) => {
-          if (key === this.highlighted) {
-            bookBold[key] = '<p>' + key + ': ' + this.book[key].replace(this.input, '<b>' + this.input + '</b>') + '</p>'
-          } else if (key !== 'image') {
-            bookBold[key] = '<p>' + key + ': ' + this.book[key] + '</p>'
+          if (!(key === 'author_id' || key === 'publisher_id')) {
+            if (key === this.highlighted) {
+              bookBold[key] = '<p>' + key + ': ' + this.book[key].replace(this.input, '<b>' + this.input + '</b>') + '</p>'
+            } else if (key !== 'image') {
+              bookBold[key] = '<p>' + key + ': ' + this.book[key] + '</p>'
+            }
           }
         })
         return bookBold

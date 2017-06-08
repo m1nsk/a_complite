@@ -1,6 +1,5 @@
 <template>
   <div>
-    <p><nuxt-link to="/addbookform">Add new book</nuxt-link></p>
     <auto-complete-input v-model="author" :callback="getByAuthor" @option="onAuthorClicked" title="Author"></auto-complete-input>
     <auto-complete-input v-model="publisher" :callback="getByPublisher" @option="onPublisherClicked" title="Publisher"></auto-complete-input>
     <form ref="myform" @submit.prevent="submitBook" method="POST" id="mainForm" enctype="multipart/form-data">
@@ -18,17 +17,17 @@
     data () {
       return {
         author: {
-          query: '1',
+          query: '',
           items: [],
           highlighted: 'author'
         },
         publisher: {
-          query: '2',
+          query: '',
           items: [],
           highlighted: 'publisher'
         },
         book: {
-          query: '3',
+          query: '',
           items: [],
           highlighted: 'name'
         },
@@ -45,9 +44,11 @@
     },
     methods: {
       getByAuthor (input) {
+        this.formModel.author = ''
         this.getByField(input, 'author')
       },
       getByPublisher (input) {
+        this.formModel.publisher = ''
         this.getByField(input, 'publisher')
       },
       getByField (input, field) {
@@ -64,6 +65,7 @@
             response.data[item]['publisher'] = response.data[item]['publisher']['name']
             this[field].items.push(response.data[item])
           }
+          console.log(this[field].items)
         }).catch(
           this[field].items = []
         )
@@ -72,10 +74,12 @@
         console.log('clicked')
       },
       onAuthorClicked (item) {
-        this.formModel.author = item
+        console.log(item.author_id)
+        this.formModel.author = item.author_id
       },
       onPublisherClicked (item) {
-        this.formModel.publisher = item
+        console.log(item.publisher_id)
+        this.formModel.publisher = item.publisher_id
       },
       submitBook () {
         if (this.validateForm()) {
@@ -85,11 +89,8 @@
           }
           var promise = addBookFrom(data)
           promise.then((response) => {
-            console.log(response.data)
             this.clearForm()
-          }).catch(
-            console.log('shit happens')
-          )
+          })
         }
       },
       clearForm () {
@@ -110,13 +111,13 @@
         return false
       },
       validateAuthor () {
-        if (this.formModel.author.author) {
+        if (this.formModel.author) {
           return true
         }
         return false
       },
       validatePublisher () {
-        if (this.formModel.publisher.publisher) {
+        if (this.formModel.publisher) {
           return true
         }
         return false
