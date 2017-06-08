@@ -42,22 +42,10 @@ export function postPublisher (formData) {
   return axios.post('/publisher/', formData, config)
 }
 
-export function getAuthorList (formData) {
-  const config = {
-    headers: {
-      'content-type': 'multipart/form-data',
-      'Content-Type': 'application/json'
-    }
-  }
-  return axios.post('/author/', formData, config)
+export function getAuthorList () {
+  return axios.get('/author/')
 }
 
-export function getPublisherList (formData) {
-  const config = {
-    headers: {
-      'content-type': 'multipart/form-data',
-      'Content-Type': 'application/json'
-    }
-  }
-  return axios.post('/publisher/', formData, config)
+export function getPublisherList () {
+  return axios.get('/publisher/')
 }

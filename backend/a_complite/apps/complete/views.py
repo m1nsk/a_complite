@@ -36,6 +36,11 @@ class BookByFieldListView(APIView):
 class BookController(APIView):
     permission_classes = (AllowAny,)
 
+    def get(self, request, format=None):
+        books = Book.objects.all()
+        serializer = BookSerializerData(books, many=True)
+        return Response(serializer.data)
+
     def post(self, request, format=None):
         serializer = BookSerializer(data=request.data)
         if serializer.is_valid():
@@ -48,24 +53,31 @@ class BookController(APIView):
 class AuthorController(APIView):
     permission_classes = (AllowAny,)
 
+    def get(self, request, format=None):
+        authors = Author.objects.all()
+        serializer = AuthorSerializer(authors, many=True)
+        print(serializer.data)
+        return Response(serializer.data)
+
     def post(self, request, format=None):
         serializer = AuthorSerializer(data=request.data)
-        print (request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        print(serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class PublisherController(APIView):
     permission_classes = (AllowAny,)
 
+    def get(self, request, format=None):
+        publishers = Publisher.objects.all()
+        serializer = PublisherSerializer(publishers, many=True)
+        return Response(serializer.data)
+
     def post(self, request, format=None):
         serializer = PublisherSerializer(data=request.data)
-        print (request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        print(serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
