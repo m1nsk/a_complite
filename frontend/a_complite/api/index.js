@@ -7,17 +7,12 @@ export const baseURL = baseHost + '/api/'
 axios.defaults.baseURL = baseURL
 
 export function getBookByField (data) {
-  console.log(data)
   return axios.get('/complete/', {
     params: data
   })
 }
 
-export function getBookByPublisher (query) {
-  return axios.get('/complete/publisher/' + query)
-}
-
-export function addBookFrom (formData) {
+export function postBook (formData) {
   const config = {
     headers: {
       'content-type': 'multipart/form-data',
@@ -27,7 +22,7 @@ export function addBookFrom (formData) {
   return axios.post('/book/', formData, config)
 }
 
-export function addAuthorFrom (formData) {
+export function postAuthor (formData) {
   const config = {
     headers: {
       'content-type': 'multipart/form-data',
@@ -37,7 +32,27 @@ export function addAuthorFrom (formData) {
   return axios.post('/author/', formData, config)
 }
 
-export function addPublisherFrom (formData) {
+export function postPublisher (formData) {
+  const config = {
+    headers: {
+      'content-type': 'multipart/form-data',
+      'Content-Type': 'application/json'
+    }
+  }
+  return axios.post('/publisher/', formData, config)
+}
+
+export function getAuthorList (formData) {
+  const config = {
+    headers: {
+      'content-type': 'multipart/form-data',
+      'Content-Type': 'application/json'
+    }
+  }
+  return axios.post('/author/', formData, config)
+}
+
+export function getPublisherList (formData) {
   const config = {
     headers: {
       'content-type': 'multipart/form-data',
