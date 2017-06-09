@@ -6,8 +6,8 @@
 </template>
 
 <script>
-  import { getBookByField, baseHost } from '../api/index.js'
-  import AutoCompleteBookInput from '~components/AutoCompleteBookInput.vue'
+  import { getBookByField, baseHost } from '../../api/index.js'
+  import AutoCompleteBookInput from '~components/bookRelated/AutoCompleteBookInput.vue'
   export default {
     data () {
       return {

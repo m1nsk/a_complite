@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
+from rest_framework import viewsets
 import json
 from rest_framework import status
 from .models import Publisher, Book, Author
@@ -50,34 +51,19 @@ class BookController(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class AuthorController(APIView):
+class BookViewSet(viewsets.ModelViewSet):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
     permission_classes = (AllowAny,)
 
-    def get(self, request, format=None):
-        authors = Author.objects.all()
-        serializer = AuthorSerializer(authors, many=True)
-        print(serializer.data)
-        return Response(serializer.data)
 
-    def post(self, request, format=None):
-        serializer = AuthorSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-class PublisherController(APIView):
+class PublisherViewSet(viewsets.ModelViewSet):
+    queryset = Publisher.objects.all()
+    serializer_class = PublisherSerializer
     permission_classes = (AllowAny,)
 
-    def get(self, request, format=None):
-        publishers = Publisher.objects.all()
-        serializer = PublisherSerializer(publishers, many=True)
-        return Response(serializer.data)
 
-    def post(self, request, format=None):
-        serializer = PublisherSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class AuthorViewSet(viewsets.ModelViewSet):
+    queryset = Author.objects.all()
+    serializer_class = PublisherSerializer
+    permission_classes = (AllowAny,)

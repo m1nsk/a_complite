@@ -1,19 +1,19 @@
 <template>
   <div class="autocomplete-input">
-    <h1>Author</h1>
+    <h1>{{title}}</h1>
     <input class="input is-large" placeholder="Search..." :value="value.query" @input="updateData()" ref="aComplete">
     <ul class="options-list">
-      <li is="author-option" :input="value.query" v-for="item in value.items" @click.native="optionClicked(item)" :author="item"></li>
+      <li is="book-option" :highlighted="value.highlighted" :input="value.query" v-for="item in value.items" @click.native="optionClicked(item)" :book="item"></li>
     </ul>
   </div>
 </template>
 
 <script>
-  import AuthorOption from '~components/AuthorOption.vue'
+  import BookOption from '~components/bookRelated/BookOption.vue'
   export default {
-    props: ['value', 'callback'],
+    props: ['value', 'callback', 'title'],
     components: {
-      AuthorOption
+      BookOption
     },
     methods: {
       updateData () {
@@ -46,11 +46,12 @@
 
   input {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    width: 100%;
   }
 
   .autocomplete-input {
     position: relative;
-    height: 300px;
+    height: 20px;
     width: 300px;
     display: inline-block;
   }

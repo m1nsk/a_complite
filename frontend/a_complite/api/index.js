@@ -25,7 +25,6 @@ export function postBook (formData) {
 export function postAuthor (formData) {
   const config = {
     headers: {
-      'content-type': 'multipart/form-data',
       'Content-Type': 'application/json'
     }
   }
@@ -35,7 +34,6 @@ export function postAuthor (formData) {
 export function postPublisher (formData) {
   const config = {
     headers: {
-      'content-type': 'multipart/form-data',
       'Content-Type': 'application/json'
     }
   }
@@ -48,4 +46,38 @@ export function getAuthorList () {
 
 export function getPublisherList () {
   return axios.get('/publisher/')
+}
+
+export function getAuthorById (id) {
+  return axios.get('/author/' + id)
+}
+
+export function getPublisherById (id) {
+  return axios.get('/publisher/' + id)
+}
+
+export function deleteAuthorById (id) {
+  return axios.delete('/author/' + id)
+}
+
+export function deletePublisherById (id) {
+  return axios.delete('/publisher/' + id)
+}
+
+export function putAuthor (id, formData) {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
+  return axios.put('/author/' + id + '/', formData, config)
+}
+
+export function putPublisher (id, formData) {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
+  return axios.put('/publisher/' + id + '/', formData, config)
 }

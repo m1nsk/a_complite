@@ -9,7 +9,7 @@
 </template>
 
 <script>
-  import PublisherOption from '~components/PublisherOption.vue'
+  import PublisherOption from '~components/publisherRelated/PublisherOption.vue'
   export default {
     props: ['value', 'callback'],
     components: {
@@ -46,11 +46,12 @@
 
   input {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    width: 100%;
   }
 
   .autocomplete-input {
     position: relative;
-    height: 300px;
+    height: 20px;
     width: 300px;
     display: inline-block;
   }

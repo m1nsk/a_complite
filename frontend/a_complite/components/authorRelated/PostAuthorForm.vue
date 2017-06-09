@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Author</h1>
-    <form ref="myform" @submit.prevent="addAuthor" method="POST" id="mainForm" enctype="multipart/form-data">
+    <form ref="myform" @submit.prevent="addAuthor" id="mainForm" class="postForm">
       <p><input type="text" placeholder="Enter author name..." v-model="formData.name"></p>
       <input type="submit" name="btnSubmit" >
     </form>
@@ -9,7 +9,7 @@
 </template>
 
 <script>
-  import { postAuthor } from '../api/index.js'
+  import { postAuthor } from '../../api/index.js'
   export default{
     data () {
       return {
@@ -50,5 +50,13 @@
 </script>
 
 <style>
+  input {
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    width: 100%;
+  }
 
+  .postForm {
+    width: 300px;
+    display: block;
+  }
 </style>

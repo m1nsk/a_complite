@@ -1,17 +1,21 @@
 <template>
   <div>
-    <filter-book-list @filterBook="filterChanged"></filter-book-list>
-    <form ref="myform" @submit.prevent="submitBook" method="POST" id="mainForm" enctype="multipart/form-data">
-      <p><input type="text" placeholder="Enter book title..." name="book" ref="book" v-model="formModel.name"></p>
-      <p><input type="file" placeholder="load book image" name="image" accept="image/*" ref="image" v-on:change="fileChanged"></p>
-      <input type="submit" name="btnSubmit" >
-    </form>
+    <filter-book-list @filterBook="filterChanged" class="filterBookList"></filter-book-list>
+    <div class="submitBookForm">
+      <h1>Author</h1>
+      <form ref="myform" @submit.prevent="submitBook" id="mainForm" >
+        <p><input type="text" placeholder="Enter book title..." name="book" ref="book" v-model="formModel.name"></p>
+        <p><input type="file" placeholder="load book image" name="image" accept="image/*" ref="image" v-on:change="fileChanged"></p>
+        <input type="submit" name="btnSubmit" >
+      </form>
+    </div>
+
   </div>
 </template>
 
 <script>
-  import { postBook } from '../api/index.js'
-  import FilterBookList from '~components/FilterBookList.vue'
+  import { postBook } from '../../api/index.js'
+  import FilterBookList from '~components/bookRelated/FilterBookList.vue'
   export default {
     data () {
       return {
@@ -78,5 +82,12 @@
 </script>
 
 <style>
-
+  .filterBookList{
+    display: inline-block;
+    vertical-align: top;
+  }
+  .submitBookForm{
+    display: inline-block;
+    vertical-align: top;
+  }
 </style>

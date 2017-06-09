@@ -7,8 +7,8 @@
 </template>
 
 <script>
-  import AddAuthorForm from '~components/AddAuthorForm.vue'
-  import AddPublisherForm from '~components/AddPublisherForm.vue'
+  import AddAuthorForm from '~components/authorRelated/PostAuthorForm.vue'
+  import AddPublisherForm from '~components/publisherRelated/PostPublisherForm.vue'
 
   export default {
     components: {

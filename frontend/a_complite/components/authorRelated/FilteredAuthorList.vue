@@ -1,12 +1,12 @@
 <template>
   <div>
-    <auto-complete-publisher-input v-model="myList" :callback="filterList" @option="onClicked" ></auto-complete-publisher-input>
+    <auto-complete-author-input v-model="myList" :callback="filterList" @option="onClicked" ></auto-complete-author-input>
   </div>
 </template>
 
 <script>
-  import { getPublisherList } from '../api/index.js'
-  import AutoCompletePublisherInput from '~components/AutoCompletePublisherInput.vue'
+  import { getAuthorList } from '../../api/index.js'
+  import AutoCompleteAuthorInput from '~components/authorRelated/AutoCompleteAuthorInput.vue'
   export default {
     data () {
       return {
@@ -19,14 +19,15 @@
       }
     },
     components: {
-      AutoCompletePublisherInput
+      AutoCompleteAuthorInput
     },
     created: function () {
-      var promise = getPublisherList()
+      var promise = getAuthorList()
       promise.then((response) => {
         for (var item in response.data) {
           this.listData.push(response.data[item])
         }
+        this.filterList()
       })
     },
     methods: {
@@ -34,14 +35,15 @@
         let list = []
         let pattern = new RegExp(input)
         this.listData.forEach((item) => {
-          if (pattern.test(item.name)) {
+          if (pattern.test(item.name) | !input) {
             list.push(item)
           }
         })
         this.myList.items = list
       },
       onClicked (item) {
-        this.myList.publisher = item.publisher_id
+        this.$router.push(this.$route.path + '/' + item.id)
+        this.myList.author = item.id
       }
     }
   }
