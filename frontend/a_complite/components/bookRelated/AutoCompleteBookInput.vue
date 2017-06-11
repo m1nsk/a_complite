@@ -1,17 +1,20 @@
 <template>
   <div class="autocomplete-input">
-    <h1>{{title}}</h1>
+    <h1>Book</h1>
     <input class="input is-large" placeholder="Search..." :value="value.query" @input="updateData()" ref="aComplete">
     <ul class="options-list">
-      <li :highlighted="value.highlighted" :input="value.query" is="book-view" v-for="item in value.items" @click.native="optionClicked(item)" :book="item"></li>
+      <li is="book-option" :highlighted="value.highlighted" :input="value.query" v-for="item in value.items" @click.native="optionClicked(item)" :book="item"></li>
     </ul>
   </div>
 </template>
 
 <script>
-  import BookView from '~components/BookView.vue'
+  import BookOption from '~components/bookRelated/BookOption.vue'
   export default {
     props: ['value', 'callback', 'title'],
+    components: {
+      BookOption
+    },
     methods: {
       updateData () {
         this.callback(this.$refs.aComplete.value)
@@ -26,9 +29,6 @@
         this.value.query = item[this.value.highlighted]
         this.value.items = [item]
       }
-    },
-    components: {
-      BookView
     }
   }
 </script>
@@ -46,11 +46,12 @@
 
   input {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    width: 100%;
   }
 
   .autocomplete-input {
     position: relative;
-    height: 300px;
+    height: 20px;
     width: 300px;
     display: inline-block;
   }

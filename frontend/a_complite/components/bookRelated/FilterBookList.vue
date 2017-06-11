@@ -1,13 +1,13 @@
 <template>
   <div>
-    <auto-complete-input v-model="author" :callback="getByAuthor" @option="onAuthorClicked" title="Author"></auto-complete-input>
-    <auto-complete-input v-model="publisher" :callback="getByPublisher" @option="onPublisherClicked" title="Publisher"></auto-complete-input>
+    <auto-complete-book-input v-model="author" :callback="getByAuthor" @option="onAuthorClicked" title="Author"></auto-complete-book-input>
+    <auto-complete-book-input v-model="publisher" :callback="getByPublisher" @option="onPublisherClicked" title="Publisher"></auto-complete-book-input>
   </div>
 </template>
 
 <script>
-  import { getBookByField, baseHost } from '../api/index.js'
-  import AutoCompleteInput from '~components/AutoCompleteInput.vue'
+  import { getBookByField, baseHost } from '../../api/index.js'
+  import AutoCompleteBookInput from '~components/bookRelated/AutoCompleteBookInput.vue'
   export default {
     data () {
       return {
@@ -28,7 +28,7 @@
       }
     },
     components: {
-      AutoCompleteInput
+      AutoCompleteBookInput
     },
     methods: {
       getByAuthor (input) {
@@ -53,10 +53,7 @@
             response.data[item]['publisher'] = response.data[item]['publisher']['name']
             this[field].items.push(response.data[item])
           }
-          console.log(this[field].items)
-        }).catch(
-          this[field].items = []
-        )
+        })
       },
       onAuthorClicked (item) {
         this.formModel.author = item.author_id

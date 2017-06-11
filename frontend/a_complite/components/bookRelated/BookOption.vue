@@ -27,7 +27,6 @@
             }
           }
         })
-        console.log('book bold')
         return bookBold
       }
     }
