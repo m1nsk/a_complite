@@ -9,9 +9,6 @@
 <script>
   export default {
     props: ['author', 'input'],
-    data () {
-      return {}
-    },
     computed: {
       authorBold () {
         var authorBold = {}

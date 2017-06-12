@@ -11,10 +11,10 @@
 <script>
   import AuthorOption from '~components/authorRelated/AuthorOption.vue'
   export default {
-    props: ['value', 'callback'],
     components: {
       AuthorOption
     },
+    props: ['value', 'callback'],
     methods: {
       updateData () {
         this.callback(this.$refs.aComplete.value)

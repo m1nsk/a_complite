@@ -20,6 +20,11 @@
   import FilteredAuthorListServerSide from '~components/authorRelated/FilteredAuthorListServerSide.vue'
   import FilteredPublisherListServerSide from '~components/publisherRelated/FilteredPublisherListServerSide.vue'
   export default {
+    components: {
+      FilterBookList,
+      FilteredAuthorListServerSide,
+      FilteredPublisherListServerSide
+    },
     data () {
       return {
         formModel: {
@@ -29,11 +34,6 @@
           image: ''
         }
       }
-    },
-    components: {
-      FilterBookList,
-      FilteredAuthorListServerSide,
-      FilteredPublisherListServerSide
     },
     methods: {
       submitBook () {

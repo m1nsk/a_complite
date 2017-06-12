@@ -8,6 +8,10 @@
   import AutoCompleteBookPutServerSide from '~components/bookRelated/AutoCompleteBookPutServerSide.vue'
   export default {
     layout: 'default',
+    validate ({ params }) {
+      // Must be a number
+      return /^\d+$/.test(params.id)
+    },
     components: {
       AutoCompleteBookPutServerSide
     }

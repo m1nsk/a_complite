@@ -11,10 +11,10 @@
 <script>
   import BookOption from '~components/bookRelated/BookOption.vue'
   export default {
-    props: ['value', 'callback'],
     components: {
       BookOption
     },
+    props: ['value', 'callback'],
     methods: {
       updateData () {
         this.callback(this.$refs.aComplete.value)

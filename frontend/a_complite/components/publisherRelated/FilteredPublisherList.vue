@@ -8,6 +8,9 @@
   import { getPublisherList } from '../../api/index.js'
   import AutoCompletePublisherInput from '~components/publisherRelated/AutoCompletePublisherInput.vue'
   export default {
+    components: {
+      AutoCompletePublisherInput
+    },
     data () {
       return {
         modelList: {
@@ -17,9 +20,6 @@
         },
         listData: []
       }
-    },
-    components: {
-      AutoCompletePublisherInput
     },
     created: function () {
       var promise = getPublisherList()

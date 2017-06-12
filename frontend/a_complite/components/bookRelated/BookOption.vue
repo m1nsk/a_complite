@@ -12,9 +12,6 @@
 <script>
   export default {
     props: ['book', 'highlighted', 'input'],
-    data () {
-      return {}
-    },
     computed: {
       bookBold () {
         var bookBold = {}

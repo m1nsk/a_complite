@@ -9,9 +9,6 @@
 <script>
   export default {
     props: ['publisher', 'input'],
-    data () {
-      return {}
-    },
     computed: {
       publisherBold () {
         var publisherBold = {}

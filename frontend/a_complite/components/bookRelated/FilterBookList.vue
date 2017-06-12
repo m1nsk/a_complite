@@ -9,6 +9,10 @@
   import { getBookByField, baseHost } from '../../api/index.js'
   import AutoCompleteBookInput from '~components/bookRelated/AutoCompleteBookInput.vue'
   export default {
+    components: {
+      AutoCompleteBookInput
+    },
+    props: ['authorQuery, publisherQuery'],
     data () {
       return {
         author: {
@@ -26,10 +30,6 @@
           publisher: ''
         }
       }
-    },
-    props: ['authorQuery, publisherQuery'],
-    components: {
-      AutoCompleteBookInput
     },
     methods: {
       getByAuthor (input) {

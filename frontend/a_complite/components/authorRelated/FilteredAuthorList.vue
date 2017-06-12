@@ -8,6 +8,9 @@
   import { getAuthorList } from '../../api/index.js'
   import AutoCompleteAuthorInput from '~components/authorRelated/AutoCompleteAuthorInput.vue'
   export default {
+    components: {
+      AutoCompleteAuthorInput
+    },
     data () {
       return {
         modelList: {
@@ -17,9 +20,6 @@
         },
         listData: []
       }
-    },
-    components: {
-      AutoCompleteAuthorInput
     },
     created: function () {
       var promise = getAuthorList()

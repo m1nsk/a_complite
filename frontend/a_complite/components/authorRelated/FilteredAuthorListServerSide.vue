@@ -1,13 +1,16 @@
 <template>
-    <div class="authorList">
-        <auto-complete-author-input v-model="modelList" :callback="filterList" @option="onClicked" ></auto-complete-author-input>
-    </div>
+  <div class="authorList">
+    <auto-complete-author-input v-model="modelList" :callback="filterList" @option="onClicked" ></auto-complete-author-input>
+  </div>
 </template>
 
 <script>
   import { getAuthorByName } from '../../api/index.js'
   import AutoCompleteAuthorInput from '~components/authorRelated/AutoCompleteAuthorInput.vue'
   export default {
+    components: {
+      AutoCompleteAuthorInput
+    },
     props: ['init'],
     data () {
       return {
@@ -17,9 +20,6 @@
           highlighted: 'name'
         }
       }
-    },
-    components: {
-      AutoCompleteAuthorInput
     },
     methods: {
       filterList (input) {
@@ -46,7 +46,7 @@
 </script>
 
 <style>
-.authorList{
+  .authorList{
     display: inline-block;
-}
+  }
 </style>

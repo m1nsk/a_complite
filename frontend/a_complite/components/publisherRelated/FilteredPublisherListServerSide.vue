@@ -8,6 +8,9 @@
   import { getPublisherByName } from '../../api/index.js'
   import AutoCompletePublisherInput from '~components/publisherRelated/AutoCompletePublisherInput.vue'
   export default {
+    components: {
+      AutoCompletePublisherInput
+    },
     props: ['init'],
     data () {
       return {
@@ -17,9 +20,6 @@
           highlighted: 'name'
         }
       }
-    },
-    components: {
-      AutoCompletePublisherInput
     },
     methods: {
       filterList (input) {
