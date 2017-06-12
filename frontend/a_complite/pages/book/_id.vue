@@ -1,18 +1,15 @@
 <template>
     <div>
-        <put-author-form></put-author-form>
+        <auto-complete-book-put-server-side></auto-complete-book-put-server-side>
     </div>
 </template>
 
 <script>
-  import PutAuthorForm from '~components/authorRelated/PutDeleteAuthorForm.vue'
+  import AutoCompleteBookPutServerSide from '~components/bookRelated/AutoCompleteBookPutServerSide.vue'
   export default {
-    validate ({ params }) {
-      // Must be a number
-      return /^\d+$/.test(params.id)
-    },
+    layout: 'default',
     components: {
-      PutAuthorForm
+      AutoCompleteBookPutServerSide
     }
   }
 </script>

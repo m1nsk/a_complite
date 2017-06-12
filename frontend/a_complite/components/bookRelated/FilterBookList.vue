@@ -1,7 +1,7 @@
 <template>
   <div>
-    <auto-complete-book-input v-model="author" :callback="getByAuthor" @option="onAuthorClicked" title="Author"></auto-complete-book-input>
-    <auto-complete-book-input v-model="publisher" :callback="getByPublisher" @option="onPublisherClicked" title="Publisher"></auto-complete-book-input>
+    <auto-complete-book-input :placeholder="authorName" v-model="author" :callback="getByAuthor" @option="onAuthorClicked" title="Author"></auto-complete-book-input>
+    <auto-complete-book-input :placeholder="publisherName" v-model="publisher" :callback="getByPublisher" @option="onPublisherClicked" title="Publisher"></auto-complete-book-input>
   </div>
 </template>
 
@@ -27,6 +27,7 @@
         }
       }
     },
+    props: ['authorQuery, publisherQuery'],
     components: {
       AutoCompleteBookInput
     },

@@ -17,6 +17,7 @@
     },
     methods: {
       updateData () {
+        console.log(this.$refs.aComplete.value)
         this.callback(this.$refs.aComplete.value)
         this.$emit('input', {
           query: this.$refs.aComplete.value,

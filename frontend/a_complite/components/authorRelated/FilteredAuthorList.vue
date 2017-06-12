@@ -1,6 +1,6 @@
 <template>
   <div>
-    <auto-complete-author-input v-model="myList" :callback="filterList" @option="onClicked" ></auto-complete-author-input>
+    <auto-complete-author-input v-model="modelList" :callback="filterList" @option="onClicked" ></auto-complete-author-input>
   </div>
 </template>
 
@@ -10,7 +10,7 @@
   export default {
     data () {
       return {
-        myList: {
+        modelList: {
           query: '',
           items: [],
           highlighted: 'name'
@@ -39,11 +39,11 @@
             list.push(item)
           }
         })
-        this.myList.items = list
+        this.modelList.items = list
       },
       onClicked (item) {
         this.$router.push(this.$route.path + '/' + item.id)
-        this.myList.author = item.id
+        this.modelList.author = item.id
       }
     }
   }

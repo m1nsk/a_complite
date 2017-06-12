@@ -34,21 +34,53 @@ class BookByFieldListView(APIView):
         return Response(serializer.data)
 
 
-class BookController(APIView):
+class BookByFieldsIdListView(APIView):
     permission_classes = (AllowAny,)
 
     def get(self, request, format=None):
-        books = Book.objects.all()
-        serializer = BookSerializerData(books, many=True)
+        publisher_id, author_id = None, None
+        if 'author_id' in request.query_params:
+            author_id = request.query_params['author_id']
+
+        if 'publisher_id' in request.query_params:
+            publisher_id = request.query_params['publisher_id']
+
+        if not author_id:
+            result_query = Book.objects.filter(author__pk=publisher_id)
+
+        elif not publisher_id:
+            result_query = Book.objects.filter(author__pk=author_id)
+
+        else:
+            print (publisher_id, author_id)
+            result_query = Book.objects.filter(publisher__pk=publisher_id, author__pk=author_id)
+
+        serializer = BookSerializerData(result_query, many=True)
         return Response(serializer.data)
 
-    def post(self, request, format=None):
-        serializer = BookSerializer(data=request.data)
-        if serializer.is_valid():
-            print('valid me')
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class AuthorByFieldListView(APIView):
+    permission_classes = (AllowAny,)
+
+    def get(self, request, format=None):
+        complete_field = request.query_params['input']
+        query_start = Author.objects.filter(name__istartswith=complete_field)
+        query_regexp = Author.objects.filter(name__regex=r'^(.)+' + complete_field)
+        result_query = list(chain(query_start, query_regexp))
+        serializer = AuthorSerializer(result_query, many=True)
+        return Response(serializer.data)
+
+
+class PublisherByFieldListView(APIView):
+    permission_classes = (AllowAny,)
+
+    def get(self, request, format=None):
+        complete_field = request.query_params['input']
+        query_start = Publisher.objects.filter(name__istartswith=complete_field)
+        query_regexp = Publisher.objects.filter(name__regex=r'^(.)+' + complete_field)
+        result_query = list(chain(query_start, query_regexp))
+        serializer = PublisherSerializer(result_query, many=True)
+        return Response(serializer.data)
 
 
 class BookViewSet(viewsets.ModelViewSet):

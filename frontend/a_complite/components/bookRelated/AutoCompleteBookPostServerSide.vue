@@ -1,21 +1,24 @@
 <template>
-  <div>
-    <filter-book-list @filterBook="filterChanged" class="filterBookList"></filter-book-list>
-    <div class="submitBookForm">
-      <h1>Author</h1>
-      <form ref="myform" @submit.prevent="submitBook" id="mainForm" >
-        <p><input type="text" placeholder="Enter book title..." name="book" ref="book" v-model="formModel.name"></p>
-        <p><input type="file" placeholder="load book image" name="image" accept="image/*" ref="image" v-on:change="fileChanged"></p>
-        <input type="submit" name="btnSubmit" >
-      </form>
+    <div>
+        <filtered-publisher-list-server-side @publisher="setPublisher" ref="first"></filtered-publisher-list-server-side>
+        <filtered-author-list-server-side @author="setAuthor"></filtered-author-list-server-side>
+        <div class="submitBookForm">
+            <h1>Book</h1>
+            <form ref="myform" @submit.prevent="submitBook" id="mainForm" >
+                <p><input type="text" placeholder="Enter book title..." name="book" ref="book" v-model="formModel.name"></p>
+                <p><input type="file" placeholder="load book image" name="image" accept="image/*" ref="img" v-on:change="fileChanged"></p>
+                <input type="submit" name="btnSubmit" >
+            </form>
+        </div>
     </div>
-
-  </div>
 </template>
 
 <script>
+  // import { putBook, getBookById, getAuthorById, getPublisherById, baseURL } from '../../api/index.js'
   import { postBook } from '../../api/index.js'
   import FilterBookList from '~components/bookRelated/FilterBookList.vue'
+  import FilteredAuthorListServerSide from '~components/authorRelated/FilteredAuthorListServerSide.vue'
+  import FilteredPublisherListServerSide from '~components/publisherRelated/FilteredPublisherListServerSide.vue'
   export default {
     data () {
       return {
@@ -28,10 +31,13 @@
       }
     },
     components: {
-      FilterBookList
+      FilterBookList,
+      FilteredAuthorListServerSide,
+      FilteredPublisherListServerSide
     },
     methods: {
       submitBook () {
+        console.log(this.formModel, 'fmodel')
         if (this.validateForm()) {
           let data = new FormData()
           for (var key in this.formModel) {
@@ -39,7 +45,7 @@
           }
           var promise = postBook(data)
           promise.then((response) => {
-            this.clearForm()
+            this.$router.go(-1)
           })
         }
       },
@@ -76,18 +82,24 @@
         for (var key in filter) {
           this.formModel[key] = filter[key]
         }
+      },
+      setAuthor (item) {
+        this.formModel.author = item.id
+      },
+      setPublisher (item) {
+        this.formModel.publisher = item.id
       }
     }
   }
 </script>
 
 <style>
-  .filterBookList{
-    display: inline-block;
-    vertical-align: top;
-  }
-  .submitBookForm{
-    display: inline-block;
-    vertical-align: top;
-  }
+    .filterBookList{
+        display: inline-block;
+        vertical-align: top;
+    }
+    .submitBookForm{
+        display: inline-block;
+        vertical-align: top;
+    }
 </style>

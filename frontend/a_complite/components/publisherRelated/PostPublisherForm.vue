@@ -27,7 +27,6 @@
           }
           var promise = postPublisher(this.formData.id, data)
           promise.then((response) => {
-            console.log(response.data)
             this.clearForm()
           })
         }

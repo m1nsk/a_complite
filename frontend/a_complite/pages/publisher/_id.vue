@@ -1,18 +1,18 @@
 <template>
     <div>
-        <put-publisher-form></put-publisher-form>
+        <put-delete-publisher-form></put-delete-publisher-form>
     </div>
 </template>
 
 <script>
-  import PutPublisherForm from '~components/publisherRelated/PutDeletePublisherForm.vue'
+  import PutDeletePublisherForm from '~components/publisherRelated/PutDeletePublisherForm.vue'
   export default {
     validate ({ params }) {
       // Must be a number
       return /^\d+$/.test(params.id)
     },
     components: {
-      PutPublisherForm
+      PutDeletePublisherForm
     }
   }
 </script>

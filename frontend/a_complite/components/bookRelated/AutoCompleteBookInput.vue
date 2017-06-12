@@ -1,6 +1,6 @@
 <template>
   <div class="autocomplete-input">
-    <h1>{{title}}</h1>
+    <h1>Book</h1>
     <input class="input is-large" placeholder="Search..." :value="value.query" @input="updateData()" ref="aComplete">
     <ul class="options-list">
       <li is="book-option" :highlighted="value.highlighted" :input="value.query" v-for="item in value.items" @click.native="optionClicked(item)" :book="item"></li>
@@ -11,7 +11,7 @@
 <script>
   import BookOption from '~components/bookRelated/BookOption.vue'
   export default {
-    props: ['value', 'callback', 'title'],
+    props: ['value', 'callback'],
     components: {
       BookOption
     },

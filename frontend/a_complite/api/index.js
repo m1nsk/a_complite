@@ -7,7 +7,25 @@ export const baseURL = baseHost + '/api/'
 axios.defaults.baseURL = baseURL
 
 export function getBookByField (data) {
-  return axios.get('/complete/', {
+  return axios.get('/complete/book', {
+    params: data
+  })
+}
+
+export function getBookByFieldsId (data) {
+  return axios.get('/complete/idlist', {
+    params: data
+  })
+}
+
+export function getPublisherByName (data) {
+  return axios.get('/complete/publisher', {
+    params: data
+  })
+}
+
+export function getAuthorByName (data) {
+  return axios.get('/complete/author', {
     params: data
   })
 }
@@ -20,6 +38,10 @@ export function postBook (formData) {
     }
   }
   return axios.post('/book/', formData, config)
+}
+
+export function getBookById (id) {
+  return axios.get('/book/' + id)
 }
 
 export function postAuthor (formData) {
@@ -56,6 +78,10 @@ export function getPublisherById (id) {
   return axios.get('/publisher/' + id)
 }
 
+export function deleteBookById (id) {
+  return axios.delete('/book/' + id)
+}
+
 export function deleteAuthorById (id) {
   return axios.delete('/author/' + id)
 }
@@ -80,4 +106,14 @@ export function putPublisher (id, formData) {
     }
   }
   return axios.put('/publisher/' + id + '/', formData, config)
+}
+
+export function putBook (id, formData) {
+  const config = {
+    headers: {
+      'content-type': 'multipart/form-data',
+      'content-Type': 'application/json'
+    }
+  }
+  return axios.put('/book/' + id + '/', formData, config)
 }
